@@ -13,11 +13,11 @@
  * @package           Rel
  *
  * @wordpress-plugin
- * Plugin Name:       rel
+ * Plugin Name:       Rel
  * Plugin URI:        http://devlife.ir
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Comments links rel attribute managed by this plugin
  * Version:           1.0.0
- * Author:            Dariush
+ * Author:            Dariush Vesal
  * Author URI:        http://devlife.ir
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
