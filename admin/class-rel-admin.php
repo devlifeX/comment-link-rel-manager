@@ -100,4 +100,55 @@ class Rel_Admin {
 
 	}
 
-}
+	/**
+	 * Register the settings page
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_admin_menu() {
+		add_menu_page( 'Rel', __('Rel', 'rel'), 'rel-manager', 'rel', array($this, 'create_admin_interface'), 'dashicons-admin-tools', 57);
+	}
+
+	/**
+	 * Callback function for the admin settings page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function create_admin_interface(){
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/rel-admin-display.php';
+	}
+
+	/**
+	 * Register the capabilities for this plugin 
+	 * This fucntion call in activator
+	 * $all_capabilities contain all your capabilites you want in this plugin.  
+	 */
+	public function register_capabilities() {
+		$all_capabilities = array('rel-manager');
+		foreach ($all_capabilities as $key_cap => $capability) {
+			$roles = get_editable_roles();
+			foreach ($GLOBALS['wp_roles']->role_objects as $key => $role) {
+				if (isset($roles[$key]) && is_admin()) {
+					$role->add_cap($capability);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Deregister the capabilities for this plugin
+	 * This fucntion call in deactivator
+	 */
+	public function deregister_capabilities() {
+		$all_capabilities = array('rel-manager');
+		foreach ($all_capabilities as $key_cap => $capability) {
+			$roles = get_editable_roles();
+			foreach ($GLOBALS['wp_roles']->role_objects as $key => $role) {
+				if (isset($roles[$key]) && is_admin() && $role->has_cap($capability)) {
+					$role->remove_cap($capability);
+				}
+			}
+		}
+	}
+
+	}

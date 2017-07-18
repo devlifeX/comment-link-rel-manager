@@ -30,7 +30,9 @@ class Rel_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+    $rel = new Rel();
+    $admin_rel = new Rel_Admin($rel->get_plugin_name(), $rel->get_version());
+    $admin_rel->deregister_capabilities();
 	}
 
 }

@@ -30,7 +30,9 @@ class Rel_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
-	}
+    $rel = new Rel();
+    $admin_rel = new Rel_Admin($rel->get_plugin_name(), $rel->get_version());
+    $admin_rel->register_capabilities();
+  }
 
 }
