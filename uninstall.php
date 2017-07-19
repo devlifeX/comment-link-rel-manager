@@ -25,6 +25,11 @@
  * @package    Rel
  */
 
+$rel = new Rel();
+$admin_rel = new Rel_Admin($rel->get_plugin_name(), $rel->get_version());
+$admin_rel->deregister_capabilities();
+delete_option( $admin_rel->rel_option );
+
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
