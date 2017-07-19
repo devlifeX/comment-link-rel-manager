@@ -21,6 +21,7 @@ $rel_admin->rel_handler();
 
 //rel_allow_roles
 $rar = unserialize(get_option($rel_admin->rel_option));
+
 ?>
 
 <div id="rel-wrap" class="wrap postbox">
@@ -29,11 +30,12 @@ $rar = unserialize(get_option($rel_admin->rel_option));
 
   <h1><?php _e("Rel manager", "rel") ?></h1>
   <h4>
-    WordPress 1.5 and above automatically assigns the nofollow attribute to all user-submitted links 
+    <?php _e('WordPress 1.5 and above automatically assigns the nofollow attribute to all user-submitted links 
     (comment data, commenter URI, etc).
     this plugin can manage nofollow,
-     Simply you can check your role and nofollow become follow
-     <a href="https://codex.wordpress.org/Nofollow" target="_blank"> <?php _e("More information", "rel") ?></a>
+     Simply you can check your role and nofollow become follow', 'rel'); ?>
+     <a href="https://codex.wordpress.org/Nofollow" target="_blank"> 
+     <?php _e("More information", "rel") ?></a>
   </h4>
   <p>
     <?php _e("Attribute", "rel") ?>
@@ -50,7 +52,7 @@ $rar = unserialize(get_option($rel_admin->rel_option));
     <ul>
       <?php foreach (get_editable_roles() as $role_name => $role_info): ?>
         <li>
-          <input type="checkbox" name="roles[]" <?php echo in_array($role_name, $rar) === true ? 'checked' : '' ?> value="<?php echo $role_name ?>" id="<?php echo $role_name ?>">
+          <input type="checkbox" name="roles[]" <?php echo @in_array($role_name, $rar) === true ? 'checked' : '' ?> value="<?php echo $role_name ?>" id="<?php echo $role_name ?>">
           <label for="<?php echo $role_name ?>"><?php _e($role_name); ?></label>
         </li>
       <?php endforeach; ?>
