@@ -33,6 +33,14 @@ class Rel_Activator {
     $rel = new Rel();
     $admin_rel = new Rel_Admin($rel->get_plugin_name(), $rel->get_version());
     $admin_rel->register_capabilities();
+
+    $allow_roles = array(
+      'administrator',
+      'editor',
+      'author',
+      'contributor'
+      );
+    $admin_rel->handle_allow_roles($allow_roles);
   }
 
 }
