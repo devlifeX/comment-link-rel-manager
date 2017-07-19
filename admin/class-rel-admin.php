@@ -154,15 +154,20 @@ class Rel_Admin {
 	}
 
 	/**
-	 * this function handle selected roles for action
+	 * this function handle selected roles when user submit
 	 * @return void 
 	 */
 	public function rel_handler() {
-		if (isset($_POST['roles'])) {
+		if (isset($_POST['submit_rel'])) {
 			$this->handle_allow_roles($_POST['roles']);
 		}
 	}
 
+	/**
+	 * this function create or update $rel_option in database
+	 * @param  array $roles allow roles
+	 * @return void
+	 */
 	public function handle_allow_roles($roles) {
 		$rel_allow_roles = get_option($this->rel_option);
 		if(empty($rel_allow_roles)) {
@@ -170,6 +175,42 @@ class Rel_Admin {
 		} else {
 			update_option($this->rel_option, serialize($roles));
 		}
+	}
+
+	public function nofollow_handler( $comments ) {
+
+		$allow = array();
+		$rar =  unserialize(get_option($this->rel_option));
+
+		/**
+		 * extract user role and compare with allow role
+		 */
+		foreach ($comments as $key => $comment) {
+			$user_meta = get_userdata($comment->user_id);
+			$allow[$comment->comment_ID] = false;
+			if(!$user_meta) {
+				continue;
+			}
+			foreach ($user_meta->roles as $role_key => $role) {
+				if(@in_array($role, $rar)) {
+					$allow[$comment->comment_ID] = true;
+					break;
+				}
+			}
+		}
+
+		/**
+		 * set follow insted of nofollow for allowd roles
+		 */
+		foreach ($comments as $key => $comment) {
+			if($allow[$comment->comment_ID]) {
+				$text = $comment->comment_content;
+				$text = preg_replace("/(<a[^>]*[^\s])(\s*nofollow\s*)/i", "$1", $text);
+				$text = preg_replace("/(<a[^>]*[^\s])(\s*rel=[\"\']\s*[\"\'])/i", "$1 rel='follow'", $text);
+				$comments[$key]->comment_content = $text;
+			}
+		}
+		return $comments;
 	}
 
 }
