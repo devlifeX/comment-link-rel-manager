@@ -40,6 +40,8 @@ class Rel_Admin {
 	 */
 	private $version;
 
+	public $rel_option = 'rel_allow_roles';
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -151,4 +153,23 @@ class Rel_Admin {
 		}
 	}
 
+	/**
+	 * this function handle selected roles for action
+	 * @return void 
+	 */
+	public function rel_handler() {
+		if (isset($_POST['roles'])) {
+			$this->handle_allow_roles($_POST['roles']);
+		}
 	}
+
+	public function handle_allow_roles($roles) {
+		$rel_allow_roles = get_option($this->rel_option);
+		if(empty($rel_allow_roles)) {
+			add_option($this->rel_option, serialize($roles));
+		} else {
+			update_option($this->rel_option, serialize($roles));
+		}
+	}
+
+}
