@@ -11,7 +11,7 @@ A few notes about the features:
 *   Every function has Comment  for more readibility
 *   Use comments_array hook for improving performance insted of signle hook
 *   Multilanguage
-*   Support custom role, so you feel free to add yours
+*   Support custom role, so you can feel free to add your role
 
 ## Installation
 This section describes how to install the plugin and get it working.
